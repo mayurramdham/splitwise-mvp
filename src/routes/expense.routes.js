@@ -1,0 +1,12 @@
+import { Router } from "express";
+import ExpenseController from "../controllers/expense.controller";
+import authMiddleware from "../middlewares/auth.middleware";
+import validate from "../middlewares/validate.js";
+import { createExpenseSchema, updateExpenseSchema, settlementSchema } from "../validator/expense.validator.js";
+const router = Router();
+router.post("/", validate(createExpenseSchema), authMiddleware, ExpenseController.createExpense);
+router.get("/", authMiddleware, ExpenseController.getExpenses);
+router.post("/settlements", validate(settlementSchema), authMiddleware, ExpenseController.ExpenseSettle);
+router.put("/:id", validate(updateExpenseSchema), authMiddleware, ExpenseController.updateExpense);
+router.delete("/:id", authMiddleware, ExpenseController.deleteExpense);
+export default router;
