@@ -1,85 +1,85 @@
-# express-sequelize-boilerplate
+# Splitwise MVP
 
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+A backend service for a Splitwise MVP built with Node.js, Express, and Sequelize. This application allows users to share expenses, track balances, and manage settlements just like the real Splitwise app.
 
-This is a simple boilerplate for building REST APIs in Node.js using Express. Intended for use with PostgreSQL using Sequelize ORM.
+## 🚀 Features
 
+### Users
+- Register and Login with JWT Authentication.
+- Set and update default currency.
+- View and update profile information.
+- Delete account securely.
 
-## Getting Started
+### Expenses
+- Add expenses specifying Name, Value, Currency, Split Type, Date, and Participants.
+- View, update, and delete expenses.
+- Settle expenses with other users.
 
-Clone the repository
+### Balances
+- View overall balances across all expenses.
+- View specific balances owed to or from individual friends.
+- Request an email report of current balances (Mocked via console).
 
-```bash
-git clone https://github.com/gadfaria/express-sequelize-boilerplate.git
-```
+### Activities
+- View an activity log of all expenses and settlements.
+- Filter activity logs by specific date ranges or periods (e.g., `current_month`, `last_month`).
 
-Enter into the directory
-```bash
-cd express-sequelize-boilerplate/
-```
+## 🛠️ Tech Stack
 
-Install the dependencies
-```bash
-yarn
-```
+- **Backend:** Node.js, Express
+- **Database:** SQLite (Relational Database)
+- **ORM:** Sequelize
+- **Validation:** Zod
+- **Authentication:** JSON Web Tokens (JWT)
 
-Set the environment variables
-```bash
-cp .env.example .env
-```
+## 📦 Installation & Setup
 
-Running the boilerplate:
-```bash
-yarn dev
-```
+1. **Clone the repository:**
+   ```bash
+   git clone <your-github-repo-url>
+   cd express-sequelize-boilerplate
+   ```
 
-## Configuration
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Variables for the environment
+3. **Environment Setup:**
+   Create a `.env` file in the root directory based on `.env.example`. Make sure you have the following keys configured:
+   ```env
+   SERVER_PORT=3000
+   NODE_ENV=development
+   SERVER_JWT=true
+   SERVER_JWT_SECRET=your_super_secret_key
+   SERVER_JWT_TIMEOUT=24h
+   DB_DIALECT=sqlite
+   DB_NAME=database.sqlite
+   ```
 
-| Option | Description |
-| ------ | ------ |
-| SERVER_PORT | Port the server will run on |
-| NODE_ENV | development or production |
-| SERVER_JWT | true or false |
-| SERVER_JWT_SECRET | JWT secret |
-| SERVER_JWT_TIMEOUT | JWT duration time |
-| DB_DIALECT | "mysql", "postgresql", among others |
-| DB_HOST | Database host |
-| DB_USER | Database username |
-| DB_PASS | Database password |
-| DB_NAME | Database name |
-| AWS_KEYID | Access key ID |
-| AWS_SECRETKEY | User secret key |
-| AWS_BUCKET | Bucket name |
+4. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   *Note: Because we are using SQLite and Sequelize's `sync()` feature, the database tables will be automatically generated when you start the server for the first time.*
 
-## Commands for sequelize 
-```bash
-# Creates the database
-yarn sequelize db:create 
+## 🧪 Testing the APIs (Postman)
 
-# Drops the database
-yarn sequelize db:drop 
+A complete, fully functional Postman collection is included in the root directory of this repository:
+**`postman.json`** (Or `Splitwise_MVP_Postman_Collection.json`)
 
-# Load migrations
-yarn sequelize db:migrate 
+### How to use Postman:
+1. Open Postman.
+2. Click **Import** and select the `postman.json` file from the repository.
+3. The collection handles Authentication automatically! Simply run the **Login** request, and the collection will automatically save your JWT token and apply it to all other protected routes.
 
-# Undo migrations
-yarn sequelize db:migrate:undo:all 
+## 📁 Project Structure Highlights
 
-# Load seeders
-yarn sequelize db:seed:all
-```
+- `src/controllers/`: Request handling and response formatting.
+- `src/services/`: Core business logic and database interactions.
+- `src/models/`: Sequelize ORM model definitions (User, Expense, Balance, ActivityLog).
+- `src/routes/`: Express route definitions.
+- `src/validator/`: Zod schemas for strict payload validation.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
-
-
-
-<h5 align="center">
-  ☕ Code and Coffee
-</h5>
+## 🤝 Contribution
+This project was built as an MVP assignment. Pull requests and feedback are welcome!
