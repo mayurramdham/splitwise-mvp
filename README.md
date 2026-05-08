@@ -81,5 +81,4 @@ A complete, fully functional Postman collection is included in the root director
 - `src/routes/`: Express route definitions.
 - `src/validator/`: Zod schemas for strict payload validation.
 
-## 🤝 Contribution
-This project was built as an MVP assignment. Pull requests and feedback are welcome!
+
