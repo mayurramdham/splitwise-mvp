@@ -15,11 +15,11 @@ class User extends BaseModel {
         email: Sequelize.STRING,
         default_currency: {
           type: Sequelize.STRING,
-          defaultValue: "USD",
+          defaultValue: "INR",
         },
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        // ...this.baseAttributes(),
+        ...this.baseAttributes(),
       },
       this.baseOptions(sequelize, {
         defaultScope: {

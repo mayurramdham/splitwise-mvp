@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import { initJobs } from "./jobs/index.js";
 import sequelizeService from "./services/sequelize.service.js";
 import awsService from "./services/aws.service.js";
 import { userRoutes } from "./routes/user.routes.js";
@@ -29,6 +30,7 @@ const services = [sequelizeService, awsService];
     }
     app.listen(3000, () => {
       console.log("Server initialized on port 3000");
+      initJobs();
     });
 
   } catch (error) {

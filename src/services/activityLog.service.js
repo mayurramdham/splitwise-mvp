@@ -25,6 +25,7 @@ class ActivityLogService {
       where.created_at = {
         [Op.between]: [new Date(filters.startDate), new Date(filters.endDate)],
       };
+      return await ActivityLog.findAll({ where, order: [["createdAt", "DESC"]] });
     } else if (filters.period) {
       const now = new Date();
       if (filters.period === "current_month") {
@@ -35,16 +36,43 @@ class ActivityLogService {
         where.created_at = {
           [Op.between]: [
             new Date(now.getFullYear(), now.getMonth() - 1, 1),
-            new Date(now.getFullYear(), now.getMonth(), 0),
+            new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999),
           ],
         };
       }
+      return await ActivityLog.findAll({ where, order: [["createdAt", "DESC"]] });
     }
 
-    return await ActivityLog.findAll({
+    const allActivities = await ActivityLog.findAll({
       where,
       order: [["createdAt", "DESC"]],
     });
+
+    const grouped = {
+      current_month: [],
+      last_month: [],
+      older: [],
+    };
+
+    const now = new Date();
+    const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+
+    for (const activity of allActivities) {
+      const dateStr = activity.createdAt || activity.created_at;
+      if (!dateStr) continue;
+      const d = new Date(dateStr);
+      if (d >= currentMonthStart) {
+        grouped.current_month.push(activity);
+      } else if (d >= lastMonthStart && d <= lastMonthEnd) {
+        grouped.last_month.push(activity);
+      } else {
+        grouped.older.push(activity);
+      }
+    }
+
+    return grouped;
   }
 }
 

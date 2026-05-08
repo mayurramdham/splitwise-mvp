@@ -9,6 +9,6 @@ import validate from "../middlewares/validate.js";
 const router = Router();
 router.get("/", authMiddleware, BalanceController.getBalances);
 router.get("/friends", authMiddleware, BalanceController.getFriendBalances);
-router.get("/:userId", validate(getBalanceBetweenUsersSchema), authMiddleware, BalanceController.getBalanceBetweenUsers);
+router.get("/:userId", authMiddleware, validate(getBalanceBetweenUsersSchema), BalanceController.getBalanceBetweenUsers);
 router.post("/report", authMiddleware, BalanceController.sendMonthlyReport);
 export default router;
