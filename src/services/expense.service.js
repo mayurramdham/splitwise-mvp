@@ -12,13 +12,23 @@ class ExpenseService {
       const expense = await Expense.create({ name, value, currency, split_type, created_by: userId, },
         { transaction },
       );
-      const splitAmount = value / participants.length;
-      const participantData = participants.map((p) => ({
-        expense_id: expense.id,
-        user_id: p.user_id,
-        amount_paid: p.amount_paid || 0,
-        amount_owed: splitAmount,
-      }));
+      const participantData = participants.map((p) => {
+        let amount_owed = 0;
+        if (split_type === "exact") {
+          amount_owed = p.amount_owed || 0;
+        } else if (split_type === "percentage") {
+          amount_owed = (value * (p.percentage || 0)) / 100;
+        } else {
+          amount_owed = value / participants.length;
+        }
+
+        return {
+          expense_id: expense.id,
+          user_id: p.user_id,
+          amount_paid: p.amount_paid || 0,
+          amount_owed: amount_owed,
+        };
+      });
       await ExpenseParticipant.bulkCreate(participantData, { transaction });
       await transaction.commit();
       await ActivityLogService.logActivity({

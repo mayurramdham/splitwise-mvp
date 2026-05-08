@@ -1,21 +1,21 @@
 {
 	"info": {
 		"_postman_id": "667c4085-5e85-4233-8e79-097c8a3faff7",
-		"name": "express-sequelize-boilerplate",
+		"name": "Splitwise MVP Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "user",
+			"name": "Users",
 			"item": [
 				{
-					"name": "add",
+					"name": "Register",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Gabriel Faria\",\n    \"email\": \"gabriel@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"123456\",\n    \"default_currency\": \"INR\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,19 +23,75 @@
 							}
 						},
 						"url": {
-							"raw": "{{server_url}}/user",
+							"raw": "{{server_url}}/api/users/register",
 							"host": [
 								"{{server_url}}"
 							],
 							"path": [
-								"user"
+								"api",
+								"users",
+								"register"
 							]
 						}
-					},
-					"response": []
+					}
 				},
 				{
-					"name": "update",
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@example.com\",\n    \"password\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/api/users/login",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/users/me",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Profile",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -51,7 +107,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Gabriel Alves de Faria\"\n}",
+							"raw": "{\n    \"name\": \"Updated Test User\",\n    \"default_currency\": \"EUR\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,141 +115,48 @@
 							}
 						},
 						"url": {
-							"raw": "{{server_url}}/user",
+							"raw": "{{server_url}}/api/users/me",
 							"host": [
 								"{{server_url}}"
 							],
 							"path": [
-								"user"
+								"api",
+								"users",
+								"me"
 							]
 						}
-					},
-					"response": []
+					}
 				},
 				{
-					"name": "get",
+					"name": "Delete Account",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server_url}}/user",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"user"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "find",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server_url}}/user/1",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"user",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{server_url}}/user/2",
+							"raw": "{{server_url}}/api/users/me",
 							"host": [
 								"{{server_url}}"
 							],
 							"path": [
-								"user",
-								"2"
+								"api",
+								"users",
+								"me"
 							]
 						}
-					},
-					"response": []
+					}
 				},
 				{
-					"name": "addAddress",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"address\": {\n        \"city\": \"Itajubá\",\n        \"state\": \"Minas Gerais\",\n        \"country\": \"Brasil\",\n        \"neighborhood\": \"Avenida\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server_url}}/user/address",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"user",
-								"address"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "login",
-			"item": [
-				{
-					"name": "login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\":\"gabriel@gmail.com\",\n    \"password\":\"123456\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server_url}}/login",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "logout",
+					"name": "Logout",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -208,31 +171,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server_url}}/logout",
+							"raw": "{{server_url}}/api/users/logout",
 							"host": [
 								"{{server_url}}"
 							],
 							"path": [
+								"api",
+								"users",
 								"logout"
 							]
 						}
-					},
-					"response": []
+					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
-			"name": "address",
+			"name": "Expenses",
 			"item": [
 				{
-					"name": "add",
+					"name": "Create Expense",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"city\": \"Itajubá\",\n    \"state\": \"Minas Gerais\",\n    \"country\": \"Brasil\",\n    \"neighborhood\": \"Avenida\"\n}",
+							"raw": "{\n    \"name\": \"Dinner\",\n    \"value\": 150.00,\n    \"currency\": \"USD\",\n    \"split_type\": \"equal\",\n    \"participants\": [\n        {\n            \"user_id\": \"b92d6e3c-1b75-4c9f-baeb-800a40f823f6\",\n            \"amount_paid\": 150.00\n        },\n        {\n            \"user_id\": \"4d7a8e5f-1c4b-4f2a-b67f-8d9e0f3b4c5a\",\n            \"amount_paid\": 0\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -240,20 +213,362 @@
 							}
 						},
 						"url": {
-							"raw": "{{server_url}}/address",
+							"raw": "{{server_url}}/api/expenses",
 							"host": [
 								"{{server_url}}"
 							],
 							"path": [
-								"address"
+								"api",
+								"expenses"
 							]
 						}
-					},
-					"response": []
+					}
+				},
+				{
+					"name": "Get Expenses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/expenses",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Expense",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dinner Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/api/expenses/:id",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "expense_uuid_here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Expense",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/expenses/:id",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "expense_uuid_here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Settle Expense",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"expense_id\": \"expense_uuid_here\",\n    \"from_user\": \"user_uuid_here\",\n    \"amount\": 50.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/api/expenses/settlements",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"settlements"
+							]
+						}
+					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "Balances",
+			"item": [
+				{
+					"name": "Get All Balances",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/balances",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"balances"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Friend Balances",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/balances/friends",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"balances",
+								"friends"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Balance With User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/balances/:userId",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"balances",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "friend_uuid_here"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Send Monthly Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/balances/report",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"balances",
+								"report"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Get Activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/api/activities?period=current_month",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"api",
+								"activities"
+							],
+							"query": [
+								{
+									"key": "period",
+									"value": "current_month",
+									"description": "current_month or last_month"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-01-01",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2024-01-31",
+									"disabled": true
+								}
+							]
+						}
+					}
+				}
+			]
 		}
 	],
-	"protocolProfileBehavior": {}
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		}
+	]
 }

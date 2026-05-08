@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import authConfig from "../config/auth.js";
-import { User } from "../models";
+import { User } from "../models/index.js";
 import { Errors } from "../utils/ApiError.js";
 
 class UserService {
@@ -47,12 +47,13 @@ class UserService {
   }
 
   static async updateProfile(userId, data) {
-    const { email, default_currency } = data;
+    const { name, email, default_currency } = data;
     const user = await User.findByPk(userId);
     if (!user) {
       throw Errors.notFound("User not found");
     }
 
+    if (name) user.name = name;
     if (email) user.email = email;
     if (default_currency) user.default_currency = default_currency;
 

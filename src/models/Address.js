@@ -1,18 +1,22 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize from "sequelize";
+import BaseModel from "./BaseModel.js";
 
-class Address extends Model {
+class Address extends BaseModel {
   static init(sequelize) {
     super.init(
       {
+        id: {
+          type: Sequelize.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         city: Sequelize.STRING,
         state: Sequelize.STRING,
         neighborhood: Sequelize.STRING,
         country: Sequelize.STRING,
+        ...this.baseAttributes(),
       },
-      {
-        sequelize,
-        timestamps: true,
-      }
+      this.baseOptions(sequelize)
     );
 
     return this;

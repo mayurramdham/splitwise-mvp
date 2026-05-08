@@ -9,7 +9,7 @@ const modelFiles = fs
       file.endsWith(".js") && file !== "BaseModel.js" && file !== "index.js",
   );
 
-let sequelize; // global instance
+let sequelize;
 
 const sequelizeService = {
   init: async () => {
@@ -30,9 +30,9 @@ const sequelizeService = {
 
       await sequelize.sync();
 
-      console.log("[SEQUELIZE] Database service initialized");
+      console.log("SEQUELIZE Database service initialized");
     } catch (error) {
-      console.log("[SEQUELIZE] Error during database service initialization");
+      console.log("SEQUELIZE Error during database service initialization");
       throw error;
     }
   },
